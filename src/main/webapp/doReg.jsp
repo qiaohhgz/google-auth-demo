@@ -16,14 +16,18 @@
 <body>
 <%
     String loginName = request.getParameter("name");
-    String secretKey = request.getParameter("secretKey");
-    String otp = request.getParameter("otp");
-    boolean loginFlag = GoogleAuth.login(secretKey, Integer.parseInt(otp));
-    if(loginFlag){
-        Constants.userSecretMap.put(loginName, secretKey);
-        response.getWriter().write("绑定成功");
+    if (Constants.userSecretMap.containsKey(loginName)) {
+        response.getWriter().write("账号已存在");
     }else{
-        response.getWriter().write("绑定失败");
+        String secretKey = request.getParameter("secretKey");
+        String otp = request.getParameter("otp");
+        boolean loginFlag = GoogleAuth.login(secretKey, Integer.parseInt(otp));
+        if(loginFlag){
+            Constants.userSecretMap.put(loginName, secretKey);
+            response.getWriter().write("绑定成功");
+        }else{
+            response.getWriter().write("绑定失败");
+        }
     }
 %>
 

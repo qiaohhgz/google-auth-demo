@@ -1,4 +1,5 @@
 <%@ page import="com.jim.google.auth.util.GoogleAuth" %>
+<%@ page import="com.jim.google.auth.commons.Constants" %>
 <%--
   Created by IntelliJ IDEA.
   User: qiao
@@ -17,6 +18,10 @@
     String loginName = request.getParameter("name");
     String secretKey = request.getParameter("secretKey");
     String url = GoogleAuth.generateOTPUrl(loginName, secretKey);
+    if (Constants.userSecretMap.containsKey(loginName)) {
+        request.setAttribute("msg", "用户名'" + loginName + "'已存在");
+        request.getRequestDispatcher("msg.jsp").forward(request, response);
+    }
 %>
 
 <p>请打开Google Authenticator 扫描二维码绑定注册用户</p>
