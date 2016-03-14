@@ -17,7 +17,7 @@
 <%
     String loginName = request.getParameter("name");
     String secretKey = request.getParameter("secretKey");
-    String url = GoogleAuth.generateOTPUrl(loginName, secretKey);
+    String url = GoogleAuth.OTP().account(loginName).secretKey(secretKey).issuer("测试").build();
     if (Constants.userSecretMap.containsKey(loginName)) {
         request.setAttribute("msg", "用户名'" + loginName + "'已存在");
         request.getRequestDispatcher("msg.jsp").forward(request, response);

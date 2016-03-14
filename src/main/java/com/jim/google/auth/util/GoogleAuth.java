@@ -12,12 +12,24 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
  * @date 2016年03月13日 下午9:38
  */
 public class GoogleAuth {
+
+    public static GoogleAuthOTP OTP(){
+        return new GoogleAuthOTP();
+    }
+
     public static String generateSecretKey() {
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         final GoogleAuthenticatorKey key = gAuth.createCredentials();
         return key.getKey();
     }
 
+    /**
+     *
+     * @param value 账号
+     * @param secretKey 密钥
+     * @return
+     */
+    @Deprecated
     public static String generateOTPUrl(String value, String secretKey) {
         return String.format("otpauth://totp/%s?secret=%s", value, secretKey);
     }
@@ -26,6 +38,4 @@ public class GoogleAuth {
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         return gAuth.authorize(secretKey, otp);
     }
-
-
 }
